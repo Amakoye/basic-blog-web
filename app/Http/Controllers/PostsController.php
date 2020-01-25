@@ -12,6 +12,9 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth', ['except'=>['index','show']]);
+    }
     public function index()
     {
         //
@@ -78,6 +81,10 @@ class PostsController extends Controller
         //
         $post = Post::find($id);
 
+        //check for the correct user
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('posts', 'Unauthorised');
+        }
         return view('posts.edit')->with('post',$post);
     }
 

@@ -10,14 +10,19 @@
                     <p>{{$post->body}}</p>
                    </div>
                    <hr>
-                   <div class="d-flex">
-                   <a href="/posts/{{$post->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
-
-                   {!!Form::open(['action'=>['PostsController@destroy',$post->id], 'method'=>'POST', 'class'=>'pull-right'])!!}
-                    {{Form::hidden('_method','DELETE')}}
-                   {{Form::submit('Delete',['class'=>'btn btn-sm btn-danger ml-5'])}}
-                   {!!Form::close()!!}
-                   </div>
+                    @if (!Auth::guest())
+                        @if (Auth::user()->id == $post->user_id)
+                            <div class="d-flex">
+                                <a href="/posts/{{$post->id}}/edit" class="btn btn-sm btn-primary">Edit</a>
+            
+                                {!!Form::open(['action'=>['PostsController@destroy',$post->id], 'method'=>'POST', 'class'=>'pull-right'])!!}
+                                {{Form::hidden('_method','DELETE')}}
+                                {{Form::submit('Delete',['class'=>'btn btn-sm btn-danger ml-5'])}}
+                                {!!Form::close()!!}
+                            </div>
+                        @endif
+                        
+                    @endif
                 </div>
             </div>
     </div>
