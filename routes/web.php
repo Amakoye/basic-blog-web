@@ -18,3 +18,4 @@ Auth::routes();
 
 Route::resource('posts', 'PostsController');
 Route::get('/dashboard', 'DashboardController@index');
+Route::resource('to-do','TodoListsController');
