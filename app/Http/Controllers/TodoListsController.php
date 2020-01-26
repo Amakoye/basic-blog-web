@@ -49,6 +49,16 @@ class TodoListsController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+            'task' => 'required',
+        ]);
+
+        $todo = new Todo;
+        $todo->task = $request->input('task');
+        $todo->user_id = auth()->user()->id;
+        $todo->save();
+
+        return redirect('/to-do')->with('success','Task added succesfully');
     }
 
     /**
@@ -94,11 +104,9 @@ class TodoListsController extends Controller
     public function destroy($id)
     {
         //
-        $todo = Todo::find($id);
-        if(auth()->user()->id !== $todo->user_id){
-            return redirect('/to-do')->with('todo','unauthorised action');
-        }else{
-            $todo->delete();
-        }
+        $todo = Todo::find($id);     
+        $todo->delete();
+        return redirect('/to-do')->with('error','task deleted');
+
     }
 }

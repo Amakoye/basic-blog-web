@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
         <div class="row mx-auto justify-content-center">
                 @include('to-do.create')
         </div>
-    </div>
     <div class="container">
         <div class="row mt-3">
             <div class="col-md-8 mx-auto card">
