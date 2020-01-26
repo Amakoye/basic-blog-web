@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Todo;
+use App\User;
 
 class TodoListsController extends Controller
 {
@@ -12,11 +13,19 @@ class TodoListsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function index()
     {
         //
-        $todos = Todo::all();
-        return view('to-do.index')->with('todos',$todos);
+        //$todos = Todo::all();
+        $user_id = auth()->user()->id;
+        //dd($user_id);
+        $user = User::find($user_id);
+
+        //dd($user);
+        return view('to-do.index')->with('todos',$user->todos);
     }
 
 
@@ -28,6 +37,7 @@ class TodoListsController extends Controller
     public function create()
     {
         //
+        return view('to-do.index');
     }
 
     /**
@@ -84,5 +94,11 @@ class TodoListsController extends Controller
     public function destroy($id)
     {
         //
+        $todo = Todo::find($id);
+        if(auth()->user()->id !== $todo->user_id){
+            return redirect('/to-do')->with('todo','unauthorised action');
+        }else{
+            $todo->delete();
+        }
     }
 }
