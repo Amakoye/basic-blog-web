@@ -14,7 +14,9 @@ class TodoListsController extends Controller
     public function index()
     {
         //
+        return view('to-do.index');
     }
+
 
     /**
      * Show the form for creating a new resource.
