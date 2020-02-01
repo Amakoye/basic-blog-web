@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    <a href="/posts/create" class="btn btn-info btn-sm">Create post</a>
+                    <a href="/posts/create" class="btn btn-info btn-sm mb-3">Create post</a>
                     @if (count($posts)>0)
                         <table class="table table-striped">
                             <tr>
